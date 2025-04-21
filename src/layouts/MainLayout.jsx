@@ -1,4 +1,3 @@
-// components/MainLayout.jsx
 import { Box, useTheme } from "@mui/material";
 
 const MainLayout = ({ children }) => {
@@ -44,16 +43,18 @@ const MainLayout = ({ children }) => {
                 />
             ))}
 
-            {/* Contenido centrado */}
             <Box
                 sx={{
                     width: "100%",
-                    maxWidth: "calc(100% - 400px)", // 200px separación por lado
+                    px: { xs: 2, sm: 4 }, // padding RESPONSIVE
+                    maxWidth: { xs: "100%", sm: "90%", md: "80%", lg: "60%" },
+                    mx: "auto",
                     zIndex: 1,
                 }}
             >
                 {children}
             </Box>
+
 
             <style>
                 {`
