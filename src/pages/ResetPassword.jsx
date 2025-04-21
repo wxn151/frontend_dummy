@@ -8,11 +8,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { isValidPassword } from "../utils/validators";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { resetPassword } from "../services/auth";
 
 const ResetPassword = () => {
-    const { token } = useParams();
+    const location = useLocation();
+    // Fetch the f. token
+    const queryParams = new URLSearchParams(location.search);
+    const token = queryParams.get("token");
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");

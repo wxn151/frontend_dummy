@@ -1,10 +1,15 @@
 ﻿import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { confirmRequest } from "../services/auth";
 import { Box, Typography, CircularProgress } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const ConfirmEmail = () => {
-    const { token } = useParams();
+
+    const location = useLocation();
+    // fetch the TOKEN
+    const queryParams = new URLSearchParams(location.search);
+    const token = queryParams.get("token");
     const navigate = useNavigate();
     const [message, setMessage] = useState("Validating your email...");
     const [loading, setLoading] = useState(true);

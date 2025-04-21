@@ -18,8 +18,8 @@ const App = () => {
                 }
             />
             <Route path="/" element={<Login />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/confirm-email" element={<ConfirmEmail />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
