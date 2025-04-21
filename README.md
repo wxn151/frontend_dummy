@@ -9,8 +9,8 @@ Project demo: https://behemoth-frontend.onrender.com
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/wxn151/frontend_dummy.git
+cd frontend_dummy
 ```
 
 b) Install the required dependencies using either npm or yarn:
