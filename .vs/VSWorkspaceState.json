@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\public",
+    "\\src",
+    "\\src\\components",
+    "\\src\\context",
+    "\\src\\hooks",
+    "\\src\\layouts",
+    "\\src\\pages",
+    "\\src\\services",
+    "\\src\\utils"
+  ],
+  "SelectedNode": "\\src\\components\\ForgotPasswordModal.jsx",
+  "PreviewInSolutionExplorer": false
+}
