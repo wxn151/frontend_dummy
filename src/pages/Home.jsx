@@ -15,6 +15,7 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     //const { token } = useAuth();
     const [user, setUser] = useState(null);
+    const MotionBox = motion(Box);
 
     useEffect(() => {
         const loadInitial = async () => {
@@ -105,26 +106,24 @@ const Home = () => {
                             <NasaArticle article={article} />
                         </Grid>
 
-                        {/* IMAGE */}
+                        {/* IMAGE */}                        
+
                         <Grid item xs={12} md={8}>
                           {article.media_type === "image" && (
-                            <motion.div
+                            <MotionBox
+                              component="img"
+                              src={article.url}
+                              alt={article.title}
                               initial={{ opacity: 0, x: -100 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ duration: 0.8, ease: "easeOut" }}
-                            >
-                              <Box
-                                component="img"
-                                src={article.url}
-                                alt={article.title}
-                                sx={{
-                                  width: "100%",
-                                  borderRadius: 3,
-                                  opacity: 0.85,
-                                  boxShadow: 5,
-                                }}
-                              />
-                            </motion.div>
+                              sx={{
+                                width: "100%",
+                                borderRadius: 3,
+                                opacity: 0.85,
+                                boxShadow: 5,
+                              }}
+                            />
                           )}
                         </Grid>
                     </Grid>
