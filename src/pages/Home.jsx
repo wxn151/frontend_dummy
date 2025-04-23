@@ -1,5 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 import { Box, Typography, Paper, CircularProgress, Grid } from "@mui/material";
+import { motion } from "framer-motion";
 import SearchBox from "../components/SearchBox";
 import NasaArticle from "../components/NasaArticle";
 import ProfileControls from "../components/ProfileMenu";
@@ -106,19 +107,25 @@ const Home = () => {
 
                         {/* IMAGE */}
                         <Grid item xs={12} md={8}>
-                            {article.media_type === "image" && (
-                                <Box
-                                    component="img"
-                                    src={article.url}
-                                    alt={article.title}
-                                    sx={{
-                                        width: "100%",
-                                        borderRadius: 3,
-                                        opacity: 0.85,
-                                        boxShadow: 5,
-                                    }}
-                                />
-                            )}
+                          {article.media_type === "image" && (
+                            <motion.div
+                              initial={{ opacity: 0, x: -100 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.8, ease: "easeOut" }}
+                            >
+                              <Box
+                                component="img"
+                                src={article.url}
+                                alt={article.title}
+                                sx={{
+                                  width: "100%",
+                                  borderRadius: 3,
+                                  opacity: 0.85,
+                                  boxShadow: 5,
+                                }}
+                              />
+                            </motion.div>
+                          )}
                         </Grid>
                     </Grid>
                     ) : (
