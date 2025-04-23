@@ -105,7 +105,6 @@ const Home = () => {
                             <NasaArticle article={article} />
                         </Grid>
                     </Grid>
-                    </Grid>
                     ) : (
                         <Box textAlign="center" mt={5}>
                             <Box
