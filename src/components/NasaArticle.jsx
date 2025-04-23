@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 
 const NasaArticle = ({ article }) => {
     if (!article) return null;
@@ -13,6 +14,25 @@ const NasaArticle = ({ article }) => {
             <Typography variant="body1" fontSize="1.4rem" color="#BDC3CB">
                 &nbsp;&nbsp;&nbsp;&nbsp;{article.explanation}
             </Typography>
+
+            {/* IMAGE */}                        
+            <Grid item xs={12} md={8}>
+              {article.media_type === "image" && (
+                <MotionBox
+                  component="img"
+                  src={article.url}
+                  alt={article.title}
+                  initial={{ opacity: 0, x: -100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  sx={{
+                    width: "100%",
+                    borderRadius: 3,
+                    opacity: 0.85,
+                    boxShadow: 5,
+                  }}
+                />
+              )}
         </>
     );
 };
