@@ -33,6 +33,8 @@ const NasaArticle = ({ article }) => {
                   }}
                 />
               )}
+            </Grid>
+
         </>
     );
 };
