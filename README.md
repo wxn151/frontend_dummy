@@ -1,59 +1,71 @@
-# SPA App (with react + vite)
+# Aplicación SPA (con React + Vite)
 
-Integrate with the back end (https://github.com/wxn151/backend_dummy.git), is a front end built with React and VITE (Mui) with a beauty website design... the app consume the NASA APOD endpoint (https://github.com/nasa/apod-api.git).
+Integrada con el back end 👉 [Repositorio backend](https://github.com/wxn151/backend_dummy.git), esta es una aplicación frontend construida con **React**, **Vite** y **Material UI**, con un diseño atractivo y moderno.  
+Además, consume la API pública de **NASA APOD** 👉 [NASA APOD GitHub](https://github.com/nasa/apod-api.git).
 
-Project demo: https://behemoth-frontend.onrender.com
+🔗 Demo del proyecto: https://behemoth-frontend.onrender.com
 
-## Getting started:
+---
 
-Clone this repository to your local machine:
+## 🛠️ Comenzando
+
+### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/wxn151/frontend_dummy.git
 cd frontend_dummy
 ```
 
-b) Install the required dependencies using either npm or yarn:
+---
 
-##### with npm
+### 2. Instalar dependencias
+
+#### Con NPM
 ```bash
 npm install
 ```
-##### with yarn
 
+#### Con Yarn
 ```bash
 yarn install
 ```
 
+---
 
-c) Installing dependencies
+### 3. Crear archivo `.env`
 
-```md
-pip install -r requirements.txt
+Crea un archivo `.env` en la raíz del proyecto y agrega las variables necesarias:
+
+```env
+VITE_APP=Nombre_de_tu_app
+VITE_RESTFUL=URL_de_tu_backend
+VITE_NASA_API_KEY=Tu_API_key_de_NASA
 ```
 
-d) Create .env file
-Create a .env file in the root of your project and add the necessary environment variables.
-```md
-VITE_APP=your_app_title
-VITE_RESTFUL=your_backend_url
-VITE_NASA_API_KEY=your_nasa_api_key
-```
-f) Run app
+---
 
-##### with npm
+### 4. Iniciar la aplicación
+
+#### Con NPM
 ```bash
-npm start
+npm run dev
 ```
-##### with yarn
 
+#### Con Yarn
 ```bash
-yarn start
+yarn dev
 ```
 
-## Contributing
-Contributions to this project are welcome. If you find any issues or have suggestions for improvement, feel free to open an issue or submit a pull request.
+---
 
-## License
-This project is licensed under the MIT License. See the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
- file for details.
+## 🤝 Contribuciones
+
+¿Ideas, errores o mejoras? ¡Son bienvenidas! Abrí un issue o un pull request.
+
+---
+
+## 🪪 Licencia
+
+MIT – [Ver licencia](https://opensource.org/licenses/MIT)
+
+---
