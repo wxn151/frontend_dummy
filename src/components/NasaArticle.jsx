@@ -8,18 +8,6 @@ const NasaArticle = ({ article }) => {
     if (!article) return null;
 
     return (
-        ChatGPT
-
-Iniciar sesión
-Dijiste:
-what error have the code 
-import { Box, Typography } from "@mui/material";
-import { motion } from "framer-motion";
-
-const NasaArticle = ({ article }) => {
-    if (!article) return null;
-
-    return (
         <MotionBox
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
