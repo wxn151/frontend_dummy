@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import { Grid } from "@mui/material";
+
 
 const MotionBox = motion(Box);
 const NasaArticle = ({ article }) => {
