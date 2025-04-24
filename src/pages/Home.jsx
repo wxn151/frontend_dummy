@@ -14,8 +14,7 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     //const { token } = useAuth();
     const [user, setUser] = useState(null);
-    const MotionBox = motion(Box);
-
+    
     useEffect(() => {
         const loadInitial = async () => {
             try {
