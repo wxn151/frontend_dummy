@@ -58,13 +58,13 @@ yarn dev
 
 ---
 
-## 🤝 Contribuciones
+## Contribuciones
 
 ¿Ideas, errores o mejoras? ¡Son bienvenidas! Abrí un issue o un pull request.
 
 ---
 
-## 🪪 Licencia
+## Licencia
 
 MIT – [Ver licencia](https://opensource.org/licenses/MIT)
 
