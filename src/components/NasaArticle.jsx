@@ -16,6 +16,7 @@ const NasaArticle = ({ article }) => {
             </Typography>
             <Typography variant="body1" fontSize="1.4rem" color="#BDC3CB">
                 &nbsp;&nbsp;&nbsp;&nbsp;{article.explanation}
+                <br /><br />
             </Typography>
 
             {/* IMAGE */}                        
