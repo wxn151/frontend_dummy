@@ -24,11 +24,13 @@ const RegisterModal = ({ open, onClose }) => {
     const [captchaValid, setCaptchaValid] = useState(false);
     const [sent, setSent] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [smtp, setSmtp] = useState(false) 
 
     useEffect(() => {
         if (!open) {
             // Reset form when closing
             setEmail("");
+            setSmtp("");
             setSent(false);
             setLoading(false);
             setUsername("");
@@ -71,8 +73,9 @@ const RegisterModal = ({ open, onClose }) => {
         setLoading(true); // waiting the petition finish
         if (validate() && captchaValid) {
             try {
-                await registerRequest(email, username, password);
+                const data = await registerRequest(email, username, password);
                 setSent(true);
+                sentSmtp(data.smtp != "deactivate");
             } catch (err) {
                 setHTTPError(
                     err?.response?.data?.detail || "The email or username already exist... please use another"
@@ -87,12 +90,13 @@ const RegisterModal = ({ open, onClose }) => {
     };
 
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs" PaperProps={{
+        <Dialog open={open} onClose={onClose} fullWidth PaperProps={{
             sx: {
                 bgcolor: "#121212",
                 color: "#fff",
                 borderRadius: 2,
-                p: 2,
+                width: 500,
+                p: 2
             },
         }}>
             <DialogTitle>
@@ -113,9 +117,15 @@ const RegisterModal = ({ open, onClose }) => {
             <DialogContent>
                 <Box display="flex" flexDirection="column" gap={2}>
                     {sent ? (
-                        <Typography sx={{ mt: 2 }}>
-                            ✅ An email with the activation link (check in your SPAM) has been sent to: <strong>{email}</strong>
-                        </Typography>
+                        smtp ? (
+                            <Typography sx={{ mt: 2 }}>
+                                ✅ An email with the activation link (check in your SPAM) has been sent to: <strong>{email}</strong>
+                            </Typography>
+                        ) : (
+                            <Typography sx={{ mt: 2 }}>
+                                ✅ Your account was successfully activated!
+                            </Typography>
+                        )
                     ) : (
                         <>
                             <TextField
@@ -196,11 +206,16 @@ const RegisterModal = ({ open, onClose }) => {
                             )}
 
                             <Button
-                                onClick={handleRegister}
                                 variant="contained"
-                                color="primary"
+                                onClick={handleRegister}
                                 disabled={!captchaValid || loading}
-                                sx={{ mt: 2 }}
+                                sx={{
+                                    backgroundColor: "#000000",
+                                    color: "#ce93d8", // Text color
+                                    "&:hover": {
+                                        color: "#FF69B4", // Darker on hover
+                                    },
+                                }}
                             >
                                 {loading ? "Sending..." : "Register"}
                             </Button>

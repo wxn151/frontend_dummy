@@ -1,7 +1,14 @@
-import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+﻿import { useState } from "react";
+import { Box, Button, TextField, IconButton } from "@mui/material";
+import { motion } from "framer-motion";
 
-const SearchBox = ({ onSearchByDate, onSearchRandom }) => {
+const MotionButton = motion(Button);
+
+const SearchBox = ({ 
+    onSearchByDate, 
+    onSearchRandom
+
+}) => {
     const [selectedDate, setSelectedDate] = useState("");
 
     const handleDateChange = (e) => {
@@ -15,28 +22,74 @@ const SearchBox = ({ onSearchByDate, onSearchRandom }) => {
         }
     };
 
+    const handleRandomClick = () => {
+        onSearchRandom();
+    };
+
     return (
         <Box
             component="form"
             onSubmit={handleSubmit}
-            sx={{ display: "flex", gap: 2, flexWrap: "wrap", justifyContent: "center" }}
+            sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 1.5,
+                flexWrap: "wrap",
+            }}
         >
+            {/* Date Picker */}
             <TextField
                 type="date"
-                label="Search by Date"
+                label="Date"
                 InputLabelProps={{ shrink: true }}
                 value={selectedDate}
                 onChange={handleDateChange}
-                sx={{ minWidth: 200 }}
+                sx={{
+                    minWidth: 150,
+                    backgroundColor: "background.paper",
+                    "& .MuiInputBase-root": {
+                        height: 44,
+                    },
+                }}
             />
-            <Button type="submit" variant="contained" color="secondary">
+
+            {/* Search Button */}
+            <MotionButton
+                type="submit"
+                variant="outlined"
+                color="primary"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                sx={{
+                    height: 40,
+                    textTransform: "none",
+                    px: 2,
+                }}
+            >
                 Search
-            </Button>
-            <Button onClick={onSearchRandom} variant="outlined" color="primary">
-                Random Article
-            </Button>
+            </MotionButton>
+
+            {/* Random Button */}
+            <MotionButton
+                onClick={handleRandomClick}
+                variant="outlined"
+                color="primary"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                sx={{
+                    height: 40,
+                    textTransform: "none",
+                    px: 2,
+                }}
+            >
+                Random
+            </MotionButton>
+
+
         </Box>
     );
 };
+
 
 export default SearchBox;

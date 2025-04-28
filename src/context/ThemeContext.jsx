@@ -1,22 +1,16 @@
-import { createContext, useContext, useMemo, useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import { getTheme } from "../styles/theme";
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import { getTheme } from '../styles/theme';
 
-const ThemeToggleContext = createContext();
-
-export const useThemeToggle = () => useContext(ThemeToggleContext);
-
-export const CustomThemeProvider = ({ children }) => {
-    const [mode, setMode] = useState("dark");
-
-    const theme = useMemo(() => getTheme(mode), [mode]);
-
-    const toggleTheme = () =>
-        setMode((prev) => (prev === "light" ? "dark" : "light"));
+const CustomThemeProvider = ({ children }) => {
+    const theme = getTheme();
 
     return (
-        <ThemeToggleContext.Provider value={{ toggleTheme, mode }}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </ThemeToggleContext.Provider>
+        <ThemeProvider theme={theme}>
+            <CssBaseline enableColorScheme />
+            {children}
+        </ThemeProvider>
     );
 };
+
+export default CustomThemeProvider;

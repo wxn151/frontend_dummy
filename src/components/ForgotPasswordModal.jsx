@@ -15,6 +15,8 @@ import useAttemptCounter from "../hooks/useAttemptCounter";
 import { forgotPassword } from "../services/auth";
 // ...
 import Captcha from "./Captcha";
+import { useNavigate } from 'react-router-dom';
+
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -26,10 +28,13 @@ const ForgotPasswordModal = ({ open, onClose }) => {
     const [sent, setSent] = useState(false);
     const { attempts, increment, reset } = useAttemptCounter();
     const [loading, setLoading] = useState(false);
+    const [smtp, setSmtp] = useState(false)
+    const [cache, setCache] = useState("")
 
     useEffect(() => {
         if (!open) {
             setLoading(false);
+            setSmtp("");
             setEmail("");
             setError("");
             setCaptchaValid(false);
@@ -37,7 +42,7 @@ const ForgotPasswordModal = ({ open, onClose }) => {
             reset();
         }
     }, [open]);
-
+        
     const handleSend = async () => {
         setLoading(true);
         setError("");
@@ -56,8 +61,10 @@ const ForgotPasswordModal = ({ open, onClose }) => {
         }
 
         try {
-            await forgotPassword(email);
+            const data = await forgotPassword(email);
             setSent(true);
+            setCache(data.message);
+            setSmtp(data.smtp = "deactivate");
         } catch (err) {
             increment();
             setError(
@@ -67,6 +74,15 @@ const ForgotPasswordModal = ({ open, onClose }) => {
             setLoading(false);
         }
     };
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (sent && smtp) {
+            navigate(cache); // REDIRECTION to reset password route
+        }
+    }, [sent, smtp, navigate, cache]);
+
 
     return (
         <Dialog
@@ -93,45 +109,50 @@ const ForgotPasswordModal = ({ open, onClose }) => {
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
+            <DialogContent>
+                <Box display="flex" flexDirection="column" gap={2}>
+                    {sent ? (
+                        <Typography sx={{ mt: 2 }}>
+                            ✅ An email with a recovery link (if you have a registered account) has been sent to: <strong>{email}</strong>
+                        </Typography>
+                    ) : (
+                        <>
+                            <TextField
+                                label="Email"
+                                type="email"
+                                fullWidth
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                error={!!error}
+                                helperText={error}
+                                variant="filled"
+                                InputProps={{ style: { color: "#fff" } }}
+                                InputLabelProps={{ style: { color: "#aaa" } }}
+                            />
 
-                <DialogContent>
-                    <Box display="flex" flexDirection="column" gap={2}>
-                        {sent ? (
-                            <Typography sx={{ mt: 2 }}>
-                                ✅ An email with a recovery link (if you have a register account) has been sent to: <strong>{email}</strong>
-                            </Typography>
-                        ) : (
-                            <>
-                                <TextField
-                                    label="Email"
-                                    type="email"
-                                    fullWidth
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    error={!!error}
-                                    helperText={error}
-                                    variant="filled"
-                                    InputProps={{ style: { color: "#fff" } }}
-                                    InputLabelProps={{ style: { color: "#aaa" } }}
-                                />
-
-                                {attempts >= 3 && (
-                                    <Captcha onValidate={(valid) => setCaptchaValid(valid)} />
-                                )}
+                            {attempts >= 3 && (
+                                <Captcha onValidate={(valid) => setCaptchaValid(valid)} />
+                            )}
 
                                 <Button
-                                    onClick={handleSend}
                                     variant="contained"
-                                    color="primary"
-                                    sx={{ mt: 2 }}
+                                    onClick={handleSend}
                                     disabled={loading}
+                                    sx={{
+                                        backgroundColor: "#000000",
+                                        color: "#ce93d8", // Text color
+                                        "&:hover": {
+                                            color: "#FF69B4", // Darker on hover
+                                        },
+                                    }}
                                 >
                                     {loading ? "Sending..." : "Send Recovery Email"}
                                 </Button>
-                            </>
-                        )}
-                    </Box>
-                </DialogContent>
+                        </>
+                    )}
+                </Box>
+            </DialogContent>
+
         </Dialog>
     );
 };

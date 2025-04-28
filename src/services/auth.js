@@ -1,67 +1,86 @@
-import axios from "axios";
-
-const API = import.meta.env.VITE_RESTFUL;
+import apiClient from './apiClient';
 
 
 // LOGGING
-
 export const loginRequest = async (email, password) => {
     try {
-        const response = await axios.post(`${API}/auth/login`, {
-            email,
-            password,
-        });
+        const response = await apiClient.post("/auth/login", { email, password });
         return response.data.access_token;
+
     } catch (error) {
-        const err = error?.response?.data;
-        throw new Error(err?.detail || "Login failed");
+        console.error("Login failed:", error.response ? error.response.data : error.message);
+        throw error;
     }
 };
 
-
-// RESET PASWORD
-
+// RESET PASSWORD (mail / pass)
 export const forgotPassword = async (email) => {
-    try {
-        const response = await axios.post(`${API}/auth/forgot-password`, {
-            email: email,
-        });
-        return response.data;
-    } catch (error) {
-        const err = error?.response?.data;
-        throw new Error(err?.detail || "Cannot send mail");
-    }
+    const response = await apiClient({
+        url: "/auth/forgot-password",
+        method: "POST",
+        data: { email },
+    });
+    return response;
 };
-
 
 export const resetPassword = async (token, newPassword) => {
-    const res = await axios.post(`${API}/auth/reset-password`, {
-        token,
-        new_password: newPassword,
+    const response = await apiClient({
+        url: "/auth/reset-password",
+        method: "POST",
+        data: {
+            token,
+            new_password: newPassword,
+        },
     });
-    return res.data;
+    return response;
 };
 
+// ACCOUNT (register / confirm)
+export const registerRequest = async (email, username, password) => {
+    const response = await apiClient({
+        url: "/auth/register",
+        method: "POST",
+        data: { email, username, password },
+    });
+    return response;
+};
 
 export const confirmRequest = async (token) => {
-    const res = await axios.post(`${API}/auth/confirm-email`, { token });
-    return res.data;
+    const response = await apiClient({
+        url: "/auth/confirm-email",
+        method: "POST",
+        data: { token },
+    });
+    return response;
 };
 
-
-// CREATE ACCOUNT
-
-export const registerRequest = async (email, username, password) => {
+// FETCH USER
+export const userInfo = async () => {
     try {
-        const response = await axios.post(`${API}/auth/register`, {
-            email,
-            username,
-            password,
+        const response = await apiClient.get("/user/me", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token") }`,
+            },
         });
         return response.data;
     } catch (error) {
         const err = error?.response?.data;
-        throw new Error(err?.detail || "The mail wasn't sent or user already exists");
+        throw new Error(err?.detail || "Failed to fetch user");
     }
 };
 
+// REFRESH TOKEN
+export const refreshTokenRequest = async () => {
+    try {
+        const response = await apiClient.post("/auth/refresh", {}, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        return response.data.accessToken;
+    } catch (error) {
+        const err = error?.response?.data;
+        throw new Error(err?.detail || "Failed to fetch token");
+    }
+
+};

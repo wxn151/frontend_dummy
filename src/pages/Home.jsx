@@ -1,19 +1,26 @@
-﻿import { useEffect, useState } from "react";
-import { Box, Typography, Paper, CircularProgress, Grid } from "@mui/material";
+﻿import {
+    useEffect, useState, useContext
+} from "react";
+import {
+    Box,
+    Typography,
+    Paper,
+    CircularProgress,
+    Grid
+} from "@mui/material";
 import SearchBox from "../components/SearchBox";
 import NasaArticle from "../components/NasaArticle";
 import ProfileControls from "../components/ProfileMenu";
-import MainLayout from "../layouts/MainLayout";
 import { fetchNasaArticle } from "../services/nasa";
-import { userInfo } from "../services/user_info";
+import LayoutMenu from "../layouts/LayoutMenu";
+import ArticleTable from "../components/ArticleTable";
 import { useAuth } from "../context/AuthContext";
 
-
 const Home = () => {
+    const [currentTab, setCurrentTab] = useState("Articles");
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(false);
-    //const { token } = useAuth();
-    const [user, setUser] = useState(null);
+    const { user } = useAuth();
     
     useEffect(() => {
         const loadInitial = async () => {
@@ -35,6 +42,8 @@ const Home = () => {
             setLoading(true);
             const data = await fetchNasaArticle(`?date=${date}`);
             setArticle(data);
+            //redirect
+            setCurrentTab("Articles");
         } catch (err) {
             console.error("Search by date failed", err);
         } finally {
@@ -54,56 +63,56 @@ const Home = () => {
         }
     };
 
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem("token");
-            if (!token) return;
-
-            try {
-                const data = await userInfo(token);
-                setUser(data);
-            } catch (err) {
-                console.error("Error loading user:", err);
-            }
-        };
-        fetchUser();
-    }, []);
-
     return (
-        <MainLayout>
             <Paper
                 elevation={4}
                 sx={{
                     padding: 4,
                     borderRadius: 4,
                     backdropFilter: "blur(10px)",
-                    backgroundColor: "rgba(190, 10, 110, 0.11)",
+                    backgroundColor: "rgba(0, 10, 110, 0.11)",
                     color: "inherit",
                 }}
             >
-                {/* profile menu */}
                 <ProfileControls />
 
-                <Typography variant="h4" align="center" mb={3} color="#6C6A61">
-                    {/*add diferents messages*/}
-                    Welcome back {user?.username}!
-                </Typography>
+                <Box sx={{ p: 4 }}>
+                    <Typography variant="h4" align="center" mb={2} color="#6C6A61">
+                        Welcome back {user?.username}!
+                    </Typography>
 
-                <Box mb={3}>
-                    <SearchBox onSearchByDate={handleSearchByDate} onSearchRandom={handleSearchRandom} />
+                    <LayoutMenu currentTab={currentTab} setCurrentTab={setCurrentTab} />
+
+                    {currentTab === "Articles"}
+                    {currentTab === "Favorites"}
                 </Box>
+
+
+                {currentTab == "Articles" ? (
+                    <Box mb={3}>
+                        <SearchBox
+                            onSearchByDate={handleSearchByDate}
+                            onSearchRandom={handleSearchRandom}
+                        />
+                    </Box>
+                ) : (
+                    <Box mb={3}></Box>
+                )}
 
                 {loading ? (
                     <Box textAlign="center" mt={5}>
                         <CircularProgress color="secondary" />
                     </Box>
                 ) : article ? (
-                    <Grid container spacing={4} alignItems="center">
-                        <Grid item xs={12} md={6}>
-                            <NasaArticle article={article} />
-                        </Grid>
-                    </Grid>
+                    currentTab == "Articles" ? (
+                            <Grid container spacing={4} alignItems="center">
+                                <Grid item xs={12} md={6}>
+                                    <NasaArticle article={article} />
+                                </Grid>
+                            </Grid>
+                        ) : (
+                                <ArticleTable handleCardClick={handleSearchByDate} />
+                            )
                     ) : (
                         <Box textAlign="center" mt={5}>
                             <Box
@@ -118,7 +127,6 @@ const Home = () => {
                         </Box>
                     ) }
             </Paper>
-        </MainLayout>
     );
 };
 
