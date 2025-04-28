@@ -1,13 +1,13 @@
 # Aplicación SPA (con React + Vite)
 
-Integrada con el back end 👉 [Repositorio backend](https://github.com/wxn151/backend_dummy.git), esta es una aplicación frontend construida con **React**, **Vite** y **Material UI**, con un diseño atractivo y moderno.  
-Además, consume la API pública de **NASA APOD** 👉 [NASA APOD GitHub](https://github.com/nasa/apod-api.git).
+Integrada con el back end 👉 [Repositorio backend](https://github.com/wxn151/backend_dummy.git), es una aplicación frontend construida con **React**, **Vite** y **Material UI**, con un diseño  minimalista.  
+Consume la API pública de **NASA APOD** 👉 [NASA APOD GitHub](https://github.com/nasa/apod-api.git).
 
 🔗 Demo del proyecto: https://behemoth-frontend.onrender.com
 
 ---
 
-## 🛠️ Comenzando
+## Comenzando
 
 ### 1. Clonar el repositorio
 
