@@ -75,7 +75,7 @@ const RegisterModal = ({ open, onClose }) => {
             try {
                 const data = await registerRequest(email, username, password);
                 setSent(true);
-                sentSmtp(data.smtp != "deactivate");
+                setSmtp(data.smtp != "deactivate");
             } catch (err) {
                 setHTTPError(
                     err?.response?.data?.detail || "The email or username already exist... please use another"
