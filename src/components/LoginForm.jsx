@@ -141,7 +141,7 @@ const LoginForm = () => {
                 mt={3}
                 sx={{ color: "text.secondary", fontSize: "0.75rem" }}
             >
-                © {new Date().getFullYear()} Behemoth System. All rights reserved.
+                © {new Date().getFullYear()} Made by Kirwan L. Albert.
             </Typography>
         </Paper>
         
